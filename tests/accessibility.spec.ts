@@ -3,7 +3,8 @@ import { loginOk } from './helpers';
 
 test.describe('Accessibility (manual-style checks)', () => {
 
-  test('login form is keyboard operable', async ({ page }) => {
+  test('login form is keyboard operable', async ({ page, browserName }) => {
+    test.skip(browserName === 'webkit', 'Tab key focus works differently in WebKit (Safari), so this check is skipped there');
     await page.goto('/');
     await page.keyboard.press('Tab');
     await expect(page.locator('[data-test="username"]')).toBeFocused();

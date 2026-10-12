@@ -60,6 +60,7 @@ test.describe.serial('Restful-Booker API', () => {
     expect(response.status()).toBe(201);
   });
 
+
   test('GET deleted booking returns 404', async ({ request }) => {
     const response = await request.get(`${BASE}/booking/${id}`);
     expect(response.status()).toBe(404);

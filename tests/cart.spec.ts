@@ -40,13 +40,13 @@ test.describe('Cart', () => {
     await expect(page.locator('[data-test="inventory-item"]')).toHaveCount(0);
   });
 
-  test('cart persists after page reload', async ({ page }) => {
+  test('cart persists even after page reload', async ({ page }) => {
     await page.locator('[data-test="add-to-cart-sauce-labs-onesie"]').click();
     await page.reload();
     await expect(page.locator('[data-test="shopping-cart-badge"]')).toHaveText('1');
   });
 
-  test('continue shopping returns to inventory', async ({ page }) => {
+  test('click continue and  shopping returns to inventory', async ({ page }) => {
     await page.locator('[data-test="shopping-cart-link"]').click();
     await page.locator('[data-test="continue-shopping"]').click();
     await expect(page).toHaveURL('/inventory.html');

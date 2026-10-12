@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import { loginOk } from './helpers';
 
 const URL = 'https://www.saucedemo.com/';
 
@@ -75,13 +76,10 @@ test.describe('Authentication', () => {
 
   test.describe('Logout', () => {
     test('should logout successfully', async ({ page }) => {
-      await page.goto(URL);
-      await page.locator('[data-test="username"]').fill('standard_user');
-      await page.locator('[data-test="password"]').fill('secret_sauce');
-      await page.locator('[data-test="login-button"]').click();
-      await expect(page).toHaveURL('/inventory.html');
+      await loginOk(page);
 
       await page.getByRole('button', { name: 'Open Menu' }).click();
+      await expect(page.locator('[data-test="logout-sidebar-link"]')).toBeVisible();
       await page.locator('[data-test="logout-sidebar-link"]').click();
 
       await expect(page.locator('[data-test="login-button"]')).toBeVisible();
