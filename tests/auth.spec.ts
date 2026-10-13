@@ -5,6 +5,7 @@ const URL = 'https://www.saucedemo.com/';
 
 test.describe('Authentication', () => {
   test.describe('Login', () => {
+
     test.beforeEach(async ({ page }) => {
       await page.goto(URL);
     });

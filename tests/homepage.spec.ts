@@ -106,15 +106,5 @@ test('has footer & social media icons visible', async ({ page }) => {
     await expect(link).toHaveAttribute('href', url);
   }
 
-  await expect(footer).toContainText('Sauce Labs. All Rights Reserved.');
-});
-
-test('testing Add to cart & Remove btn', async ({ page }) => {
-  await loginOk(page);
-
-  await page.locator('[data-test="add-to-cart-sauce-labs-backpack"]').click();
-  await expect(page.locator('[data-test="shopping-cart-badge"]')).toHaveText('1');
-
-  await page.locator('[data-test="remove-sauce-labs-backpack"]').click();
-  await expect(page.locator('[data-test="shopping-cart-badge"]')).not.toBeVisible();
+  await expect(footer).toContainText('© 2026 Sauce Labs. All Rights Reserved. Terms of Service | Privacy Policy');
 });

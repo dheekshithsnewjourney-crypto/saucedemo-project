@@ -10,7 +10,8 @@ async function checkOutBackpack(page: Page) {
 }
 
 test.describe('Checkout', () => {
-  test('complete happy path', async ({ page }) => {
+
+  test('complete the happy path', async ({ page }) => {
     await checkOutBackpack(page);
     await page.locator('[data-test="firstName"]').fill('Dheekshith');
     await page.locator('[data-test="lastName"]').fill('Tester');
@@ -45,7 +46,7 @@ test.describe('Checkout', () => {
     await expect(page.locator('[data-test="error"]')).toContainText('Postal Code is required');
   });
 
-  test('order total = item total + tax', async ({ page }) => {
+  test('check if order total = total item + tax', async ({ page }) => {
     await checkOutBackpack(page);
     await page.locator('[data-test="firstName"]').fill('A');
     await page.locator('[data-test="lastName"]').fill('B');
@@ -59,13 +60,13 @@ test.describe('Checkout', () => {
     expect(+(sub + tax).toFixed(2)).toBe(total);
   });
 
-  test('cancel on step one returns to cart', async ({ page }) => {
+  test('try to cancel on step one and returns to cart', async ({ page }) => {
     await checkOutBackpack(page);
     await page.locator('[data-test="cancel"]').click();
     await expect(page).toHaveURL('/cart.html');
   });
 
-  test('back home after order clears cart', async ({ page }) => {
+  test('back to home after the order clears the cart', async ({ page }) => {
     await checkOutBackpack(page);
     await page.locator('[data-test="firstName"]').fill('A');
     await page.locator('[data-test="lastName"]').fill('B');
