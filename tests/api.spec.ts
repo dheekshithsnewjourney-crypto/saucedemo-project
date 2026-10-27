@@ -20,7 +20,7 @@ test.describe.serial('Restful-Booker API', () => {
     expect(response.status()).toBe(201);
   });
 
-  test('POST /auth returns token', async ({ request }) => {
+  test('POST /auth returns the token', async ({ request }) => {
     const response = await request.post(`${BASE}/auth`, { data: { username: 'admin', password: 'password123' } });
     expect(response.ok()).toBeTruthy();
     token = (await response.json()).token;
@@ -50,7 +50,7 @@ test.describe.serial('Restful-Booker API', () => {
     expect((await response.json()).firstname).toBe('Updated');
   });
 
-  test('DELETE without token is forbidden', async ({ request }) => {
+  test('DELETE without the token is forbidden', async ({ request }) => {
     const response = await request.delete(`${BASE}/booking/${id}`);
     expect(response.status()).toBe(403);
   });
@@ -59,7 +59,6 @@ test.describe.serial('Restful-Booker API', () => {
     const response = await request.delete(`${BASE}/booking/${id}`, { headers: { Cookie: `token=${token}` } });
     expect(response.status()).toBe(201);
   });
-
 
   test('GET deleted booking returns 404', async ({ request }) => {
     const response = await request.get(`${BASE}/booking/${id}`);

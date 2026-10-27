@@ -2,6 +2,7 @@ import { test, expect } from '@playwright/test';
 import { login, loginOk, USERS } from './helpers';
 
 test.describe('Edge cases', () => {
+
   test('SQL-injection-style username is rejected', async ({ page }) => {
     await login(page, "' OR 1=1 --", 'x');
     await expect(page.locator('[data-test="error"]')).toBeVisible();
@@ -39,7 +40,7 @@ test.describe('Edge cases', () => {
     await expect(page.locator('[data-test="error"]')).toBeVisible();
   });
 
-  test('problem_user: all product images are the same (known bug)', async ({ page }) => {
+  test('problem_user: all product images are the same', async ({ page }) => {
     await login(page, USERS.problem);
     await expect(page).toHaveURL('/inventory.html');
     await expect(page.locator('.inventory_item_img img').first()).toBeVisible();

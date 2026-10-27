@@ -1,13 +1,11 @@
 import { test, expect } from '@playwright/test';
 import { loginOk } from './helpers';
 
-const URL = 'https://www.saucedemo.com/';
-
 test.describe('Authentication', () => {
   test.describe('Login', () => {
 
     test.beforeEach(async ({ page }) => {
-      await page.goto(URL);
+      await page.goto('/');
     });
 
     test('should show error for invalid credentials', async ({ page }) => {
@@ -76,6 +74,7 @@ test.describe('Authentication', () => {
   });
 
   test.describe('Logout', () => {
+
     test('should logout successfully', async ({ page }) => {
       await loginOk(page);
 
