@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { login, loginOk, USERS } from './helpers';
+import { login, loginOk, USERS, logout } from './helpers';
 
 test.describe('Edge cases', () => {
 
@@ -32,10 +32,7 @@ test.describe('Edge cases', () => {
 
   test('browser back after logout does not reveal inventory', async ({ page }) => {
     await loginOk(page);
-    await expect(page.locator('[data-test="inventory-item"]').first()).toBeVisible();
-    await page.getByRole('button', { name: 'Open Menu' }).click();
-    await expect(page.locator('[data-test="logout-sidebar-link"]')).toBeVisible();
-    await page.locator('[data-test="logout-sidebar-link"]').click();
+    await logout(page);
     await page.goBack();
     await expect(page.locator('[data-test="error"]')).toBeVisible();
   });

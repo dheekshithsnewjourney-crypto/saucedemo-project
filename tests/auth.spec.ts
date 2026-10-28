@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { loginOk } from './helpers';
+import { loginOk, logout } from './helpers';
 
 test.describe('Authentication', () => {
   test.describe('Login', () => {
@@ -78,9 +78,7 @@ test.describe('Authentication', () => {
     test('should logout successfully', async ({ page }) => {
       await loginOk(page);
 
-      await page.getByRole('button', { name: 'Open Menu' }).click();
-      await expect(page.locator('[data-test="logout-sidebar-link"]')).toBeVisible();
-      await page.locator('[data-test="logout-sidebar-link"]').click();
+      await logout(page);
 
       await expect(page.locator('[data-test="login-button"]')).toBeVisible();
     });

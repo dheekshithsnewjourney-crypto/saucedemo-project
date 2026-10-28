@@ -23,3 +23,12 @@ export async function loginOk(page: Page) {
   await expect(page.locator('[data-test="inventory-item"]').first()).toBeVisible();
 }
 
+// Logs out through the side menu.
+// The menu slides open, and on a slow machine it can close again before the click lands.
+// So we retry "open menu + click Logout" until it works (for up to 15 seconds).
+export async function logout(page: Page) {
+  await expect(async () => {
+    await page.getByRole('button', { name: 'Open Menu' }).click({ timeout: 2000 });
+    await page.locator('[data-test="logout-sidebar-link"]').click({ timeout: 2000 });
+  }).toPass({ timeout: 15000 });
+}

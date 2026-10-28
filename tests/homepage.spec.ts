@@ -7,6 +7,9 @@ test('has title & Cart & Menu-open & Menu-close', async ({ page }) => {
   await expect(page.locator('.app_logo')).toHaveText('Swag Labs');
   await expect(page.locator('[data-test="shopping-cart-link"]')).toBeVisible();
   await expect(page.locator('[data-test="open-menu"]')).toBeVisible();
+
+  // The close (X) icon only shows while the menu is open, so open the menu first
+  await page.locator('[data-test="open-menu"]').click();
   await expect(page.locator('[data-test="close-menu"]')).toBeVisible();
 });
 
@@ -82,7 +85,8 @@ test('has product details', async ({ page }) => {
 
     await expect(product.locator('[data-test="inventory-item-name"]')).toHaveText(expected.name);
     await expect(product.locator('[data-test="inventory-item-price"]')).toHaveText(expected.price);
-    await expect(product.locator('[data-test="inventory-item-description"]')).toHaveText(expected.description);
+    // This element also holds the name, price and button, so we check that it CONTAINS the description
+    await expect(product.locator('[data-test="inventory-item-description"]')).toContainText(expected.description);
   }
 });
 
