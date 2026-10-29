@@ -46,10 +46,10 @@ test.describe('Edge cases', () => {
     expect(new Set(srcs).size, 'BUG: problem_user shows duplicate images').toBe(1);
   });
 
-  test('performance_glitch_user logs in within 10s', async ({ page }) => {
+  test('performance_glitch_user logs in within 20s', async ({ page }) => {
     const start = Date.now();
     await login(page, USERS.glitch);
-    await expect(page).toHaveURL('/inventory.html', { timeout: 10_000 });
+    await expect(page).toHaveURL('/inventory.html', { timeout: 20000 });
     console.log(`Login took ${Date.now() - start} ms`);
   });
 

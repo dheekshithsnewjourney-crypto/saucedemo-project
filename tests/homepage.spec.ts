@@ -8,9 +8,12 @@ test('has title & Cart & Menu-open & Menu-close', async ({ page }) => {
   await expect(page.locator('[data-test="shopping-cart-link"]')).toBeVisible();
   await expect(page.locator('[data-test="open-menu"]')).toBeVisible();
 
-  // The close (X) icon only shows while the menu is open, so open the menu first
-  await page.locator('[data-test="open-menu"]').click();
-  await expect(page.locator('[data-test="close-menu"]')).toBeVisible();
+  // The close (X) icon only shows while the menu is open, so open the menu first.
+  // We click the "Open Menu" button by its name, and retry in case the menu closes again while it slides.
+  await expect(async () => {
+    await page.getByRole('button', { name: 'Open Menu' }).click({ timeout: 2000 });
+    await expect(page.locator('[data-test="close-menu"]')).toBeVisible({ timeout: 2000 });
+  }).toPass({ timeout: 15000 });
 });
 
 test('has filter', async ({ page }) => {

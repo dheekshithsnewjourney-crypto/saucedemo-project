@@ -6,7 +6,7 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
-  workers: process.env.CI ? 1 : undefined,
+  workers: 1,   // one test at a time: Firefox froze at random steps when several browsers ran together
 
   reporter: [
     ['html'],
@@ -15,9 +15,9 @@ export default defineConfig({
 
   use: {
     baseURL: 'https://www.saucedemo.com',
-    trace: 'on-first-try',
+    trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    video: 'on-first-retry'
+    video: 'retain-on-failure'
   },
 
   projects: [
@@ -28,6 +28,8 @@ export default defineConfig({
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
+      timeout: 60000,   // Firefox starts slowly on this machine
+      retries: 1,
     },
     {
       name: 'webkit',
